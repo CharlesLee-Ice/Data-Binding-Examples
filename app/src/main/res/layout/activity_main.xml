@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="java.util.List" />
+
+        <import type="com.example.liqilin.databindingexample.User" />
+
+        <variable
+            name="handlers"
+            type="com.example.liqilin.databindingexample.MainActivity" />
+
+        <variable
+            name="user"
+            type="User" />
+
+        <variable
+            name="userList"
+            type="List&lt;User&gt;" />
+        
+        <variable
+            name="index"
+            type="int" />
+
+        <variable
+            name="paddingLeft"
+            type="int" />
+    </data>
+
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.example.liqilin.databindingexample.MainActivity">
+
+        <TextView
+            android:id="@+id/firstName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onFirstNameClick"
+            android:text="@{user.firstName}" />
+
+        <TextView
+            android:id="@+id/lastName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{handlers::onLastNameClick}"
+            android:onLongClick="@{() -> handlers.onLastNameLongClick(user)}"
+            android:padding="20dp"
+            android:text="@{user.lastName}" />
+
+        <include layout="@layout/layout_text"
+            bind:user="@{user}"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@{paddingLeft}"
+            android:text="@{String.valueOf(((User)userList[index]).age)}"/>
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:imageUrl="@{user.uri}"
+            app:placeholder="@{@drawable/award_icon_test}"/>
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:imageUrl="@{((User)userList[index]).uri}"
+            app:placeholder="@{@drawable/award_icon_test}"/>
+    </LinearLayout>
+</layout>
